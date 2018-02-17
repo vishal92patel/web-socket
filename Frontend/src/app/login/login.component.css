@@ -1,0 +1,14 @@
+#loginComponent{
+    background-color: #272733;
+    height: 100vh;
+    width: 100vw;
+}
+.login-wrapper{
+    position: absolute;
+    min-height: 288px;
+    min-width: 350px;       
+    top:50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -175px;
+}
