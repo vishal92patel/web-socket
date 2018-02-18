@@ -1,14 +1,20 @@
-#loginComponent{
+#signUpComponent{
     background-color: #272733;
     height: 100vh;
     width: 100%;
 }
-.login-wrapper{
+.sign-up-wrapper{
     position: absolute;
     min-height: 288px;
     min-width: 350px;       
     top:50%;
     left: 50%;
     margin-top: -200px;
-    margin-left: -175px;
+    margin-left: -281px;
+}
+.custom-text-nowrap{
+    white-space: nowrap; 
+    width: 9em; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
 }

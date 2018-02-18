@@ -1,0 +1,128 @@
+<div id="signUpComponent">
+  <div class="container">
+    <div class="row">
+      <div class="sign-up-wrapper">
+        <div class="card">
+            <div class="card-body" [formGroup]="signUpForm">
+              <h5 class="card-title text-center">Sign Up</h5>
+              <div class="sign-up-form">
+                <div class="form-row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="fullName">Full name</label>
+                      <input type="text" class="form-control" id="fullName" placeholder="Enter Full Name" formControlName="fullName">
+                      <div class="errorHelp" *ngIf="signUpForm.controls['fullName'].invalid && (signUpForm.controls['fullName'].touched || signUpForm.controls['fullName'].dirty)">
+                        <small class="form-text" 
+                          *ngIf="signUpForm.controls['fullName'].errors.required">
+                          You can not Leave empty.
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="email">Email address</label>
+                      <input type="email" class="form-control" id="email" placeholder="Enter email" formControlName="email">
+                      <div class="errorHelp" *ngIf="signUpForm.controls['email'].invalid && (signUpForm.controls['email'].touched || signUpForm.controls['email'].dirty)">
+                        <small class="form-text" 
+                          *ngIf="signUpForm.controls['email'].errors.required">
+                          You can not Leave empty.
+                        </small>
+                        <small class="form-text" 
+                          *ngIf="!signUpForm.controls['email'].errors.required && 
+                          signUpForm.controls['email'].errors.email">
+                          Please enter correct email address.
+                        </small>
+                      </div>
+                    </div>    
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control" id="password" placeholder="Enter password" formControlName="password">
+                      <div class="errorHelp" *ngIf="signUpForm.controls['password'].invalid && (signUpForm.controls['password'].touched || signUpForm.controls['password'].dirty)">
+                        <small class="form-text" 
+                          *ngIf="signUpForm.controls['password'].errors.required">
+                          You can not Leave empty.
+                        </small>
+                        <small class="form-text" 
+                          *ngIf="!signUpForm.controls['password'].errors.required && 
+                          signUpForm.controls['password'].errors.pattern">
+                          Please minimum 8 charecters
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="confirmPassword">Confirm password</label>
+                      <input type="text" class="form-control" id="confirmPassword" placeholder="Confirm password" formControlName="confirmPassword">
+                      <div class="errorHelp" *ngIf="signUpForm.controls['confirmPassword'].invalid && (signUpForm.controls['confirmPassword'].touched || signUpForm.controls['confirmPassword'].dirty)">
+                        <small class="form-text" 
+                          *ngIf="signUpForm.controls['confirmPassword'].errors.required">
+                          You can not Leave empty.
+                        </small>
+                        <small class="form-text" 
+                          *ngIf="!signUpForm.controls['confirmPassword'].errors.required && 
+                          signUpForm.controls['confirmPassword'].errors.pattern">
+                          Please minimum 8 charecters
+                        </small>
+                        <small class="form-text" 
+                          *ngIf="!signUpForm.controls['confirmPassword'].errors.required && 
+                          !signUpForm.controls['confirmPassword'].errors.pattern && 
+                          signUpForm.controls['confirmPassword'].errors.confirmPasswordValidators">
+                          Confirm password is not matched.
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="gender">Gender</label>
+                      <div class="form-row">
+                        <div class="col">
+                          <div class="custom-control custom-radio">
+                            <input type="radio" id="genderMale" value="male" name="gender" class="custom-control-input" formControlName="gender">
+                            <label class="custom-control-label" for="genderMale">Male</label>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="custom-control custom-radio">
+                              <input type="radio" id="genderFemale" value="female" name="gender" class="custom-control-input" formControlName="gender">
+                              <label class="custom-control-label" for="genderFemale">Female</label>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="confirmPassword">Profile picture</label>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="profilePicture" (change)="onChangeProfilePicture($event)">
+                        <label class="custom-file-label" for="profilePicture" *ngIf="!signUpForm.controls['profilePicture'].value?.name">
+                          Choose file
+                        </label>
+                        <label class="custom-file-label ng-touched" for="profilePicture" *ngIf="signUpForm.controls['profilePicture'].value?.name"
+                        [ngClass]="{
+                          'ng-invalid': signUpForm.controls['profilePicture'].invalid,
+                          'ng-valid': signUpForm.controls['profilePicture'].valid
+                        }">
+                        <div class="custom-text-nowrap">{{signUpForm.controls['profilePicture'].value?.name}}</div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-block" [disabled]="!signUpForm.valid" (click)="onLogin()">Sign Up</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
