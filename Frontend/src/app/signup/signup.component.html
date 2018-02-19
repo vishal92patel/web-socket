@@ -103,7 +103,8 @@
                     <div class="form-group">
                       <label for="confirmPassword">Profile picture</label>
                       <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="profilePicture" (change)="onChangeProfilePicture($event)">
+                        <input type="file" class="custom-file-input" id="profilePicture" (change)="onChangeProfilePicture($event)"
+                        (click)="onClickProfilePicture($event)">
                         <label class="custom-file-label" for="profilePicture" *ngIf="!signUpForm.controls['profilePicture'].value?.name">
                           Choose file
                         </label>
@@ -114,6 +115,38 @@
                         }">
                         <div class="custom-text-nowrap">{{signUpForm.controls['profilePicture'].value?.name}}</div>
                         </label>
+                      </div>
+                      <div class="errorHelp" *ngIf="signUpForm.controls['profilePicture'].invalid && (signUpForm.controls['profilePicture'].touched || signUpForm.controls['profilePicture'].dirty)">
+                        <small class="form-text" 
+                          *ngIf="signUpForm.controls['profilePicture'].errors.required">
+                          You can not Leave empty.
+                        </small>
+                        <small class="form-text" 
+                          *ngIf="!signUpForm.controls['profilePicture'].errors.required && 
+                          signUpForm.controls['profilePicture'].errors.exceedSize">
+                          Required maximum size is "1MB".
+                        </small>
+                        <small class="form-text" 
+                          *ngIf="!signUpForm.controls['profilePicture'].errors.required && 
+                          !signUpForm.controls['profilePicture'].errors.exceedSize && 
+                          signUpForm.controls['profilePicture'].errors.invalidExtension">
+                          Required extension is ".jpg" only.
+                        </small>
+                        <small class="form-text" 
+                          *ngIf="!signUpForm.controls['profilePicture'].errors.required && 
+                          !signUpForm.controls['profilePicture'].errors.exceedSize && 
+                          !signUpForm.controls['profilePicture'].errors.invalidExtension && 
+                          signUpForm.controls['profilePicture'].errors.invalidMimeType">
+                          Required mime type is "image/jpeg" only.
+                        </small>
+                        <small class="form-text" 
+                          *ngIf="!signUpForm.controls['profilePicture'].errors.required && 
+                          !signUpForm.controls['profilePicture'].errors.exceedSize && 
+                          !signUpForm.controls['profilePicture'].errors.invalidExtension && 
+                          !signUpForm.controls['profilePicture'].errors.invalidMimeType && 
+                          signUpForm.controls['profilePicture'].errors.invalidMimeUint8Array">
+                          Invalid file type, It's look like you have renamed file extension.
+                        </small>
                       </div>
                     </div>
                   </div>

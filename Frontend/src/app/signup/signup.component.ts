@@ -12,11 +12,10 @@ export class SignupComponent implements OnInit {
   profilePicture: File = null;
   fileValidation = {
     maxSize: 1048576, // 1MB
-    extensions : ["jpg"],
+    extensions : ["jpg", "JPG"],
     mimeTypes: ["image/jpeg"],
     mimeUint8ArrayList: [
-      { 0 : [255, 216, 255, 2240] },
-      { 1 : [255, 216, 255, 2240] }
+      { 0 : [255, 216, 255, 224] } // when it compaire it will convert toString()
     ]
   }
 
@@ -80,12 +79,9 @@ export class SignupComponent implements OnInit {
   fileValidators(){
     return (control: FormControl) => {
       if(control.value){
-        console.log(control)
         if(this.fileValidation){
           if(this.fileValidation.maxSize >= control.value.size){
-            this.checkExtensions(control);
-            this.checkMimeType(control);
-            this.checkMimeUint8ArrayList(control);
+            return this.checkExtensions(control);
           }else{
             return {exceedSize: true};
           }
@@ -101,59 +97,63 @@ export class SignupComponent implements OnInit {
   checkMimeUint8ArrayList(control: FormControl){
     if(this.fileValidation.mimeUint8ArrayList.length > 0){
       let isValidMimeUint8Array = false;
-      this.fileValidation.mimeUint8ArrayList.forEach((element, index) => {
-        console.log(element)
-        if(element[index].toString() == control.value.uint8Array.toString()){
+      for(let i = 0; i <= this.fileValidation.mimeTypes.length; i++){
+        if(this.fileValidation.mimeUint8ArrayList[i][i].toString() == control.value.uint8Array.toString()){
           let isValidMimeUint8Array = true;
           return null;
         }else{
-          if(this.fileValidation.mimeUint8ArrayList.length-1 == index){
+          if((this.fileValidation.mimeUint8ArrayList.length - 1) == i){
             if(!isValidMimeUint8Array){
               return {invalidMimeUint8Array: true};
             }
           }
         }
-      });  
-    }else{
+      }
+    } else {
       return null;   
     }
   }
   checkMimeType(control: FormControl){
     if(this.fileValidation.mimeTypes.length > 0){
       let isValidMimeType = false;
-      this.fileValidation.mimeTypes.forEach((element, index) => {
-        if(element == control.value.type){
+      for(let i = 0; i <= this.fileValidation.mimeTypes.length; i++){
+        if(this.fileValidation.mimeTypes[i] == control.value.type){
           isValidMimeType = true;
-          return null;
+          return this.checkMimeUint8ArrayList(control);
         }else{
-          if(this.fileValidation.mimeTypes.length - 1 == index){
+          if((this.fileValidation.mimeTypes.length - 1) == i){
             if(!isValidMimeType){
               return {invalidMimeType: true};
             }
           }
         }
-      });  
+      }
     } else {
       return null;
     }
   }
-  checkExtensions(control: FormControl){
+  checkExtensions(control){
     if(this.fileValidation.extensions.length > 0){
       let isValidExt = false;
-      this.fileValidation.extensions.forEach((element, index) => {
-        if(element == control.value.extension){
-          return null;
+      for(let i = 0; i <= this.fileValidation.extensions.length; i++){
+        if(this.fileValidation.extensions[i] == control.value.extension){
+          let isValidExt = true;
+          return this.checkMimeType(control);
         }else{
-          if(this.fileValidation.extensions.length - 1 == index){
+          if((this.fileValidation.extensions.length - 1) == i){
             if(!isValidExt){
               return {invalidExtension: true};      
             }
           }
         }
-      });
+      }
     } else {
       return null;
     }
+  }
+  onClickProfilePicture($event){
+    this.signUpForm.controls['profilePicture'].markAsTouched();
+    this.signUpForm.controls['profilePicture'].markAsDirty();
   }
   onChangeProfilePicture(event){
     if(event.target.files && event.target.files.length > 0){
@@ -180,9 +180,14 @@ export class SignupComponent implements OnInit {
       }).subscribe((res) => {
         let temp = {};
         temp = this.getFileBasicData(file);
-        console.log(Object.assign(temp, res));
+        Object.assign(temp, res);
         this.signUpForm.controls['profilePicture'].setValue(temp);
+        this.signUpForm.controls['profilePicture'].markAsTouched();
+        this.signUpForm.controls['profilePicture'].markAsDirty();
       });
+    } else {
+      this.signUpForm.controls['profilePicture'].markAsTouched();
+      this.signUpForm.controls['profilePicture'].markAsDirty();
     }
   }
   getFileMimeType(file): Observable<any>{
