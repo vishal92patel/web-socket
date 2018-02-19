@@ -104,14 +104,15 @@
                       <label for="confirmPassword">Profile picture</label>
                       <div class="custom-file">
                         <input type="file" class="custom-file-input" id="profilePicture" (change)="onChangeProfilePicture($event)"
-                        (click)="onClickProfilePicture($event)">
+                        (click)="onClickProfilePicture($event)" [disabled]="signUpForm.controls['profilePicture'].disabled">
                         <label class="custom-file-label" for="profilePicture" *ngIf="!signUpForm.controls['profilePicture'].value?.name">
                           Choose file
                         </label>
                         <label class="custom-file-label ng-touched" for="profilePicture" *ngIf="signUpForm.controls['profilePicture'].value?.name"
                         [ngClass]="{
                           'ng-invalid': signUpForm.controls['profilePicture'].invalid,
-                          'ng-valid': signUpForm.controls['profilePicture'].valid
+                          'ng-valid': signUpForm.controls['profilePicture'].valid,
+                          'disabled': signUpForm.controls['profilePicture'].disabled
                         }">
                         <div class="custom-text-nowrap">{{signUpForm.controls['profilePicture'].value?.name}}</div>
                         </label>
@@ -151,9 +152,17 @@
                     </div>
                   </div>
                 </div>
-                <button type="button" class="btn btn-primary btn-block" [disabled]="!signUpForm.valid" (click)="onLogin()">Sign Up</button>
+                <button type="button" class="btn btn-primary btn-block" [disabled]="!signUpForm.valid" (click)="onSignUp()">Sign Up</button>
               </div>
             </div>
+        </div>
+        <div class="progress bottom-card-progress progress-fast" *ngIf="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+        </div>
+        <div class="text-center link-light">
+          <small>Have an account? 
+            <a class="link-light" routerLink="/signin"><b ><u>SignIn</u></b></a>
+          </small>
         </div>
       </div>
     </div>

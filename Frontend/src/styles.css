@@ -20,6 +20,26 @@
 .link-light{
   color: #FFF;
 }
+.link-light a:hover{
+  color:#dedede;
+}
 .link-dark{
   color: #272733;
+}
+.link-dark a:hover{
+  color:#dedede;
+}
+
+.disabled{
+  background-color: #e9ecef;
+  opacity: 1;
+}
+
+.bottom-card-progress{
+  position: relative;
+  border-radius: 0 0 .25rem .25rem;
+  top: -0.25rem;
+}
+.progress-fast .progress-bar{
+  animation-duration: 0.5s;
 }

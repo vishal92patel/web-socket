@@ -1,5 +1,6 @@
 #loginComponent{
-    background-color: #272733;
+    /* background-color: #272733; */
+    background-color: #01579b;
     height: 100vh;
     width: 100%;
 }
@@ -9,6 +10,6 @@
     min-width: 350px;       
     top:50%;
     left: 50%;
-    margin-top: -200px;
+    margin-top: -250px;
     margin-left: -175px;
 }

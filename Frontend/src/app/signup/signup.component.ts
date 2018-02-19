@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+  progress: Boolean = false;
   signUpForm: FormGroup;
   profilePicture: File = null;
   fileValidation = {
@@ -220,5 +221,13 @@ export class SignupComponent implements OnInit {
       "extension" : temp[1],
       "type" : file.type,
     }
+  }
+  onSignUp(){
+    this.progress = true;
+    this.signUpForm.disable();
+    setTimeout( ()=> {
+      this.progress = false;
+      this.signUpForm.enable();
+    }, 2000);
   }
 }
