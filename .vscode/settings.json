@@ -1,0 +1,9 @@
+{
+"workbench.welcome.enabled": false,
+"editor.tabSize": 3,
+"editor.wordWrap": "on",
+"editor.insertSpaces": true,
+"editor.detectIndentation": true,
+"tslint.rulesDirectory": "./node_modules/codelyzer",
+"typescript.tsdk": "node_modules/typescript/lib"
+} 
