@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     // this.socket.on('CREATE_USER', (data) => {
     //   console.log(data);
     // });
-    this.webSocketService.send(Commands.CREATE_USER, {fromAngularKey: 'from angular value'});
+    // this.webSocketService.send(Commands.CREATE_USER, {fromAngularKey: 'from angular value'});
 
     this.webSocketService.subscribe(Commands.CREATE_USER, (res) => {
       console.log(res);
