@@ -9,27 +9,45 @@ isset($_POST['profilePicture'])
 ) {
    $postData = $_POST;
    echo signup($pdo, $postData);   
+}else{
+   if(isset($_POST['command'])){
+      echo json_encode(array(
+         "command" => $_POST['command'],
+         "error" => "Data not posted properly."
+      ));
+   }else{
+      echo json_encode(array(
+         "error" => "Data not received."
+      ));
+   }
 }
 function signup($pdo, $postDataVal){
         if(!checkEmailExist($pdo, $postDataVal['email'])){
            $sql = 'INSERT INTO users (full_name, email, password, gender, has_already_logged_in, socket_id) values (:full_name, :email, :password, :gender, :has_already_logged_in, :socket_id)';
            $stmt = $pdo->prepare($sql);
-           $stmt->execute(
-              array(
-                 "full_name" => $postDataVal['fullName'],
-                 "email" => $postDataVal['email'],
-                 "password" => $postDataVal['password'],
-                 "gender" => $postDataVal['gender'], 
-                 "has_already_logged_in" => 0,
-                 "socket_id" => 0
+           if($stmt->execute(
+               array(
+                  "full_name" => $postDataVal['fullName'],
+                  "email" => $postDataVal['email'],
+                  "password" => $postDataVal['password'],
+                  "gender" => $postDataVal['gender'], 
+                  "has_already_logged_in" => 0,
+                  "socket_id" => 0
+               )
               )
-              );
-              $getNewImgName = convertBase64ToImage($postDataVal);
-              insertUserProfilePicture($pdo, $pdo->lastInsertId(), $getNewImgName);
+            ){
+               $getNewImgName = convertBase64ToImage($postDataVal);
+               insertUserProfilePicture($pdo, $pdo->lastInsertId(), $getNewImgName);
                return json_encode(array(
                   "command" => $postDataVal['command'],
                   "success" => "Account created successfully."
                ));
+            }else{
+            return json_encode(array(
+               "command" => $postDataVal['command'],
+               "error" => "Data not inserted for signup user."
+               ));
+            }
         }else {
            return json_encode(array(
             "command" => $postDataVal['command'],
