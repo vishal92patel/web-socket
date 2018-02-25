@@ -20,15 +20,17 @@ export class WebSocketResolve implements Resolve<any>{
                this.gpioService.setSocketId(res['id']);
                this.router.navigate(["home/signin"]);
             }else if(res['id'] && res['disconnected']){
-               this.router.navigate(["404"]);
+               this.gpioService.setSocketId(null);
+               this.router.navigate(["disconnected"]);
             }else{
-               this.router.navigate(["404"]);
+               this.gpioService.setSocketId(null);
+               this.router.navigate(["disconnected"]);
             }
             clearTimeout(timeout);
             obs.complete();
          });
          timeout = setTimeout(() => {
-            this.router.navigate(["404"]);
+            this.router.navigate(["socket-error"]);
             obs.complete();
          },5000);
       });

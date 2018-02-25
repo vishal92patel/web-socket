@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { GpioService } from '../services/gpio/gpio.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,10 +9,12 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   constructor(
+    private gpioService: GpioService,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.gpioService.setAppCompLoader(false);
     this.createLoginForm();
   }
 
