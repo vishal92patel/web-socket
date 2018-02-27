@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { WebSocketService } from '../services/web-socket/web-socket.service';
@@ -9,7 +9,7 @@ import { Commands } from '../services/commands';
    templateUrl: './signup.component.html',
    styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
    progress: Boolean = false;
    signUpForm: FormGroup;
    profilePicture: File = null;
@@ -21,7 +21,8 @@ export class SignupComponent implements OnInit {
          { 0: [255, 216, 255, 224] } // when it compaire it will convert toString()
       ]
    }
-
+   unsubscribeWebSocketService;
+   alertBox = {};
    constructor(
       private fb: FormBuilder,
       private webSocketService: WebSocketService
@@ -29,6 +30,21 @@ export class SignupComponent implements OnInit {
 
    ngOnInit() {
       this.createSignUpForm();
+      this.unsubscribeWebSocketService = this.webSocketService.subscribe(Commands.CREATE_USER, (res)=>{
+         console.log(res);
+         if(res.success){
+            Object.assign(this.alertBox, {success:true, msg: res.success});
+            this.signUpForm.reset();
+         }else if(res.error){
+            Object.assign(this.alertBox, {error:true, msg: res.error});
+         }
+         this.progress = false;
+         this.signUpForm.enable();
+      });
+   }
+
+   ngOnDestroy(){
+      this.unsubscribeWebSocketService.unsubscribe();
    }
 
    createSignUpForm() {
@@ -226,13 +242,14 @@ export class SignupComponent implements OnInit {
       }
    }
    onSignUp() {
-      this.webSocketService.send(Commands.CREATE_USER, this.signUpForm.value);
-      console.log(this.signUpForm.value)
+      this.alertBox = {};
       this.progress = true;
-      // this.signUpForm.disable();
-      //  setTimeout( ()=> {
-      //    this.progress = false;
-      //    this.signUpForm.enable();
-      //  }, 2000);X
+      this.signUpForm.disable();
+      this.webSocketService.send(Commands.CREATE_USER, this.signUpForm.value);
+      console.log(this.signUpForm.value);
+   }
+   onKeyupUpdateSignupForm(){
+      this.signUpForm.setValue(this.signUpForm.value);
+      this.signUpForm.updateValueAndValidity();
    }
 }

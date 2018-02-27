@@ -23,7 +23,7 @@ isset($_POST['profilePicture'])
 }
 function signup($pdo, $postDataVal){
         if(!checkEmailExist($pdo, $postDataVal['email'])){
-           $sql = 'INSERT INTO users (full_name, email, password, gender, has_already_logged_in, socket_id) values (:full_name, :email, :password, :gender, :has_already_logged_in, :socket_id)';
+           $sql = 'INSERT INTO users (full_name, email, password, gender, has_already_logged_in) values (:full_name, :email, :password, :gender, :has_already_logged_in)';
            $stmt = $pdo->prepare($sql);
            if($stmt->execute(
                array(
@@ -31,8 +31,7 @@ function signup($pdo, $postDataVal){
                   "email" => $postDataVal['email'],
                   "password" => $postDataVal['password'],
                   "gender" => $postDataVal['gender'], 
-                  "has_already_logged_in" => 0,
-                  "socket_id" => 0
+                  "has_already_logged_in" => 0
                )
               )
             ){

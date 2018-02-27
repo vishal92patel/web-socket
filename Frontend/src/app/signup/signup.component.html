@@ -41,7 +41,7 @@
                   <div class="col">
                     <div class="form-group">
                       <label for="password">Password</label>
-                      <input type="password" class="form-control" id="password" placeholder="Enter password" formControlName="password">
+                      <input type="password" class="form-control" id="password" placeholder="Enter password" formControlName="password" (keyup)="onKeyupUpdateSignupForm()">
                       <div class="errorHelp" *ngIf="signUpForm.controls['password'].invalid && (signUpForm.controls['password'].touched || signUpForm.controls['password'].dirty)">
                         <small class="form-text" 
                           *ngIf="signUpForm.controls['password'].errors.required">
@@ -52,13 +52,19 @@
                           signUpForm.controls['password'].errors.pattern">
                           Please minimum 8 charecters
                         </small>
+                        <small class="form-text" 
+                          *ngIf="!signUpForm.controls['password'].errors.required && 
+                          !signUpForm.controls['password'].errors.pattern && 
+                          signUpForm.controls['password'].errors.confirmPasswordValidators">
+                          Password is not matched.
+                        </small>
                       </div>
                     </div>
                   </div>
                   <div class="col">
                     <div class="form-group">
                       <label for="confirmPassword">Confirm password</label>
-                      <input type="text" class="form-control" id="confirmPassword" placeholder="Confirm password" formControlName="confirmPassword">
+                      <input type="text" class="form-control" id="confirmPassword" placeholder="Confirm password" formControlName="confirmPassword" (keyup)="onKeyupUpdateSignupForm()">
                       <div class="errorHelp" *ngIf="signUpForm.controls['confirmPassword'].invalid && (signUpForm.controls['confirmPassword'].touched || signUpForm.controls['confirmPassword'].dirty)">
                         <small class="form-text" 
                           *ngIf="signUpForm.controls['confirmPassword'].errors.required">
@@ -73,7 +79,7 @@
                           *ngIf="!signUpForm.controls['confirmPassword'].errors.required && 
                           !signUpForm.controls['confirmPassword'].errors.pattern && 
                           signUpForm.controls['confirmPassword'].errors.confirmPasswordValidators">
-                          Confirm password is not matched.
+                          Password is not matched.
                         </small>
                       </div>
                     </div>
@@ -156,12 +162,20 @@
               </div>
             </div>
         </div>
+        <div class="alert bottom-alertbox" 
+          [ngClass]="{
+            'alert-danger': alertBox?.error,
+            'alert-success': alertBox?.success
+          }"
+          *ngIf="alertBox?.msg">
+            {{alertBox?.msg}}
+        </div>
         <div class="progress bottom-card-progress progress-fast" *ngIf="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
         </div>
         <div class="text-center link-light">
           <small>Have an account? 
-            <a class="link-light" routerLink="/signin"><b ><u>SignIn</u></b></a>
+            <a class="link-light" routerLink="/home/signin"><b ><u>SignIn</u></b></a>
           </small>
         </div>
       </div>
