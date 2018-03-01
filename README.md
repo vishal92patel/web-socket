@@ -1,4 +1,4 @@
-<pre>
+<p>
 This is a **real time application** , demonstrate you that how **two way (bidirectional) communication** happened using **websocket** technology, as http protocol can handle only single way (single TCP connection) communication.
 
   **This project is divided in to 3 parts/projects to understand.**
@@ -8,7 +8,7 @@ This is a **real time application** , demonstrate you that how **two way (bidire
   (2) Messaging.
 
   (3) Webservice.
-</pre>
+</p>
 
 **What each project contains?**
 
