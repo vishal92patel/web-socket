@@ -11,10 +11,12 @@ This is a **real time application** , demonstrate you that how **two way (bidire
 **What each project contains?**
 
 (1) **Frontend** is part where all UI related things are there.
+    
     Technology used in: - **Angular5, Socket-Client.**
 
 (2) **Messaging** act as an intermediate between Frontend and Webservice.
-    Technology used in: - **Node.Js, Express.Js, and Socket.io**
+
+Technology used in: - **Node.Js, Express.Js, and Socket.io**
 
 (3) **Webservice** , Is simple REST APIs.
     Technology used in: - **PHP, MySQL and Apache2.**
