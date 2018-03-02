@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { GpioService } from '../services/gpio/gpio.service';
 import { WebSocketService } from '../services/web-socket/web-socket.service';
 import { Commands } from '../services/commands';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private gpioService: GpioService,
     private fb: FormBuilder,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -31,6 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.alertBox = {success: true, msg: res.success};
         localStorage.setItem('socketId', this.gpioService.getSocketId());
         this.gpioService.setLoggedInStatus(true);
+        this.router.navigate(['/dashboard']);
       }
       this.loginForm.enable();
     });

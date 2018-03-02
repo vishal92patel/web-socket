@@ -1,3 +1,49 @@
-<p>
-  active-users-panel works!
-</p>
+<div class="search-bar form-group">
+  <input type="text" class="form-control" placeholder="Search your friends">
+</div>
+<ul class="list-group">
+  <div *ngFor="let x of [1,2,3,4,5,6,7,8,9,10]">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div class="list-group-item-wrapper">
+        <div class="profile-pic">
+          <img [src]="'http://www.gstatic.com/webp/gallery/4.jpg'" />
+        </div>
+        <div class="name">
+          Morbi leo risus
+          <div class="last_seen">Online</div>
+        </div>
+        <div class="status">
+          <span class="badge badge-online"></span>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div class="list-group-item-wrapper">
+        <div class="profile-pic">
+          <img [src]="'http://www.gstatic.com/webp/gallery/4.jpg'" />
+        </div>
+        <div class="name">
+          Morbi leo risus
+          <div class="last_seen">Last seen on 23rd Mar 2018 at 08:05 am</div>
+        </div>
+        <div class="status">
+          <span class="badge badge-offline"></span>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div class="list-group-item-wrapper">
+        <div class="profile-pic">
+          <img [src]="'http://www.gstatic.com/webp/gallery/4.jpg'" />
+        </div>
+        <div class="name">
+          Morbi leo risus
+          <div class="last_seen">Online</div>
+        </div>
+        <div class="status">
+          <span class="badge badge-online"></span>
+        </div>
+      </div>
+    </li>
+  </div>
+</ul>
