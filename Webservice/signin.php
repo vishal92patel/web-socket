@@ -3,7 +3,7 @@ require_once('connection.php');
 if( isset($_POST['email']) && 
 isset($_POST['password']) && 
 isset($_POST['command']) && 
-isset($_POST['socketId'])) {
+isset($_POST['socket_id'])) {
     $postData = $_POST;
     echo signin($pdo, $postData);
 }
@@ -20,7 +20,7 @@ function signin($pdo, $postDataVal){
             if(setUserTologgedIn($pdo, $row['id'], $postDataVal['socket_id'])){
                 return json_encode(array(
                     "command" => $postDataVal['command'],
-                    'success'=>'loggedIn.'
+                    'success'=>'You have successfully logged in.'
                 ));
             }else{
                 return json_encode(array(
@@ -32,7 +32,7 @@ function signin($pdo, $postDataVal){
     }else{
         return json_encode(array(
             "command" => $postDataVal['command'],
-            'error'=>'Email/Password invalid.'
+            'error'=>'Invalid email or password, Try again.'
         ));
     }
 }

@@ -17,3 +17,33 @@ export class CanActiveHome implements CanActivate{
       }
    }
 }
+@Injectable()
+export class CanActiveSignin implements CanActivate{
+   constructor(
+      private router: Router,
+      private gpioService: GpioService
+   ){}
+   canActivate() {
+      if(!localStorage.getItem('socketId')){
+         return true;
+      }else{
+         this.router.navigate(['/home/auto-signing']);
+         return false;
+      }
+   }
+}
+@Injectable()
+export class CanActiveAutoSigning implements CanActivate{
+   constructor(
+      private router: Router,
+      private gpioService: GpioService
+   ){}
+   canActivate() {
+      if(localStorage.getItem('socketId')){
+         return true;
+      }else{
+         this.router.navigate(['/home/signin']);
+         return false;
+      }
+   }
+}

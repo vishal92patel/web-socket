@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-const  commandsModule = require('./modules/commandsModule');
+const commandsModule = require('./modules/commandsModule');
 var request = require('request');
 var apiUrl = "http://localhost/websocket_apis";
 // app.use(function (req, res, next) {
@@ -42,11 +42,22 @@ io.on('connection', function (socket) {
                url: apiUrl + '/signup.php',
                form: data
             }, function (requestErr, requestRes, requestBody) {
-               console.log(requestErr)
-               console.log(requestRes)
-               console.log(requestBody)
                sendToClient(socket, 'received', requestBody);
-            });
+            }
+         );
+      }
+   });
+   socket.on(commandsModule().LOGIN_USER, (data) => {
+      console.log(data);
+      if (data.command == commandsModule().LOGIN_USER) {
+         request.post(
+            {
+               url: apiUrl + '/signin.php',
+               form: data
+            }, function (requestErr, requestRes, requestBody) {
+               sendToClient(socket, 'received', requestBody);
+            }
+         );
       }
    });
 });

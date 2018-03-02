@@ -41,9 +41,20 @@
               <div class="text-center link-dark"><small><u>Forget your password?</u></small></div>
           </div>
         </div>
+        <div class="alert bottom-alertbox" 
+          [ngClass]="{
+            'alert-danger': alertBox?.error,
+            'alert-success': alertBox?.success
+          }"
+          *ngIf="alertBox?.msg">
+            {{alertBox?.msg}}
+        </div>
+        <div class="progress bottom-card-progress progress-fast" *ngIf="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+        </div>
         <div class="text-center link-light">
           <small>Don't have an account? 
-            <a class="link-light" routerLink="/home/signup"><b ><u>SignUp</u></b></a>
+            <a class="link-light" routerLink="/home/signup"><b ><u>Sign up</u></b></a>
           </small>
         </div>
       </div>

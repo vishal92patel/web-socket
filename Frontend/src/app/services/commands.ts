@@ -6,5 +6,5 @@
 
 export enum Commands {
     CREATE_USER = "CREATE_USER",
-    GET_USER = "GET_USER",
+    LOGIN_USER = "LOGIN_USER"
 }
