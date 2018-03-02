@@ -30,8 +30,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
    ngOnInit() {
       this.createSignUpForm();
-      this.unsubscribeWebSocketService = this.webSocketService.subscribe(Commands.CREATE_USER, (res)=>{
-         console.log(res);
+      this.unsubscribeWebSocketService = this.webSocketService.subscribe(Commands.CREATE_USER, (res) => {
          if(res.success){
             Object.assign(this.alertBox, {success:true, msg: res.success});
             this.signUpForm.reset();
@@ -246,7 +245,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.progress = true;
       this.signUpForm.disable();
       this.webSocketService.send(Commands.CREATE_USER, this.signUpForm.value);
-      console.log(this.signUpForm.value);
    }
    onKeyupUpdateSignupForm(){
       this.signUpForm.setValue(this.signUpForm.value);

@@ -15,7 +15,6 @@ export class WebSocketResolve implements Resolve<any>{
       let timeout;
       return new Observable((obs) => {
          this.webSocketService.connect().subscribe( (res) => {
-            console.log(res);
             if(res['id'] && res['connected']){
                this.gpioService.setSocketId(res['id']);
                this.router.navigate(["home/signin"]);

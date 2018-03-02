@@ -23,15 +23,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.gpioService.setAppCompLoader(false);
     this.createLoginForm();
-    this.unsubscribeWebSocketService = this.webSocketService.subscribe(Commands.LOGIN_USER, (res)=>{
-      console.log(res);
+    this.unsubscribeWebSocketService = this.webSocketService.subscribe(Commands.LOGIN_USER, (res) => {
       this.progress = false;
       if(res.error){
         this.alertBox = {error: true, msg: res.error}
       }else if(res.success){
-        this.gpioService.setLoggedInStatus(true);
         this.alertBox = {success: true, msg: res.success};
         localStorage.setItem('socketId', this.gpioService.getSocketId());
+        this.gpioService.setLoggedInStatus(true);
       }
       this.loginForm.enable();
     });
@@ -61,6 +60,5 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.progress = true;
     this.loginForm.disable();
     this.webSocketService.send(Commands.LOGIN_USER, Object.assign(this.loginForm.value, { "socket_id": this.gpioService.getSocketId()}));
-    console.log(this.loginForm.value)
   }
 }

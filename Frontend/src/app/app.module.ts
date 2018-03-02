@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { appRoutes } from './app.routes';
-import { CanActiveHome, CanActiveSignin, CanActiveAutoSigning } from './app.canActive';
+import { CanActiveHome, CanActiveSignin, CanActiveAutoSigning, CanActiveDashboard } from './app.canActive';
 import { GpioService } from './services/gpio/gpio.service';
 import { WebSocketResolve } from './app.rosolve';
 import { AppComponent } from './app.component';
@@ -15,6 +15,7 @@ import { ConnectingComponent } from './helper/connecting/connecting.component';
 import { DisconnectedComponent } from './helper/disconnected/disconnected.component';
 import { SocketErrorComponent } from './helper/socket-error/socket-error.component';
 import { AutoSigningComponent } from './auto-signing/auto-signing.component';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 
 @NgModule({
    declarations: [
@@ -24,7 +25,8 @@ import { AutoSigningComponent } from './auto-signing/auto-signing.component';
       ConnectingComponent,
       DisconnectedComponent,
       SocketErrorComponent,
-      AutoSigningComponent
+      AutoSigningComponent,
+      DashboardComponent
    ],
    imports: [
       BrowserModule,
@@ -35,6 +37,7 @@ import { AutoSigningComponent } from './auto-signing/auto-signing.component';
       CanActiveHome,
       CanActiveSignin,
       CanActiveAutoSigning,
+      CanActiveDashboard,
       WebSocketService,
       GpioService,
       WebSocketResolve

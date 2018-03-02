@@ -60,6 +60,19 @@ io.on('connection', function (socket) {
          );
       }
    });
+   socket.on(commandsModule().AUTO_SIGNING, (data) => {
+      console.log(data);
+      if (data.command == commandsModule().AUTO_SIGNING) {
+         request.post(
+            {
+               url: apiUrl + '/auto_signing.php',
+               form: data
+            }, function (requestErr, requestRes, requestBody) {
+               sendToClient(socket, 'received', requestBody);
+            }
+         );
+      }
+   });
 });
 
 function sendToClient(socket, channel, data) {

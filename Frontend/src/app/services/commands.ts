@@ -6,5 +6,6 @@
 
 export enum Commands {
     CREATE_USER = "CREATE_USER",
-    LOGIN_USER = "LOGIN_USER"
+    LOGIN_USER = "LOGIN_USER",
+    AUTO_SIGNING ="AUTO_SIGNING"
 }

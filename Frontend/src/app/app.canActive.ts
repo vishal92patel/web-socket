@@ -47,3 +47,18 @@ export class CanActiveAutoSigning implements CanActivate{
       }
    }
 }
+@Injectable()
+export class CanActiveDashboard implements CanActivate{
+   constructor(
+      private router: Router,
+      private gpioService: GpioService
+   ){}
+   canActivate() {
+      if(this.gpioService.getLoggedInStatus()){
+         return true;
+      }else{
+         this.router.navigate(['/home/signin']);
+         return false;
+      }
+   }
+}

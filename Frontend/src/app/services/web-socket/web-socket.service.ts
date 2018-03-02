@@ -19,13 +19,11 @@ export class WebSocketService {
          this.socket = io.connect(this.url);
          this.registerChannel();
          this.socket.on('connect', () => {
-            console.log('connect');
             if (this.socket.id) {
                obs.next(this.socket);
             }
          });
          this.socket.on('disconnect', () => {
-            console.log('disconnect');
             if (this.socket) {
                obs.next(this.socket);
             }
