@@ -4,18 +4,17 @@ import { WebSocketService } from '../../services/web-socket/web-socket.service';
 import { Commands } from '../../services/commands';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-active-users-panel',
+  templateUrl: './active-users-panel.component.html',
+  styleUrls: ['./active-users-panel.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class ActiveUsersPanelComponent implements OnInit {
   constructor(
     private gpioService: GpioService,
     private webSocketService: WebSocketService
   ) { }
 
   ngOnInit() {
-    this.gpioService.setAppCompLoader(false);
   }
 
 }

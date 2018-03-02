@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+date_default_timezone_set('Asia/Kolkata');
    try {
       $pdo = new PDO('mysql:host=localhost;dbname=websocket', 'root', '');
    }

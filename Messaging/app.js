@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 io.on('connection', function (socket) {
    console.log(socket.id + 'user connected');
    socket.on('disconnect', function () {
-      console.log(socket.id + 'user disconnected');
+      logout(socket.id, request);
    });
    socket.on(commandsModule().CREATE_USER, (data) => {
       console.log(data);
@@ -77,6 +77,17 @@ io.on('connection', function (socket) {
 
 function sendToClient(socket, channel, data) {
    socket.emit(channel, data);
+}
+function logout(socketId, request){
+   request.post(
+      {
+         url: apiUrl + '/logout.php',
+         form: {socket_id: socketId, command: "LOGOUT"}
+      }, function (requestErr, requestRes, requestBody) {
+         console.log(requestBody);
+      }
+   );
+   console.log(socketId + ' user disconnected');
 }
 
 http.listen(3000, function () {

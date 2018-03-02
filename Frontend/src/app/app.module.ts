@@ -16,6 +16,7 @@ import { DisconnectedComponent } from './helper/disconnected/disconnected.compon
 import { SocketErrorComponent } from './helper/socket-error/socket-error.component';
 import { AutoSigningComponent } from './auto-signing/auto-signing.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { ActiveUsersPanelComponent } from './dashboard/active-users-panel/active-users-panel.component';
 
 @NgModule({
    declarations: [
@@ -26,7 +27,8 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
       DisconnectedComponent,
       SocketErrorComponent,
       AutoSigningComponent,
-      DashboardComponent
+      DashboardComponent,
+      ActiveUsersPanelComponent
    ],
    imports: [
       BrowserModule,
