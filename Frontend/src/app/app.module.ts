@@ -17,6 +17,8 @@ import { SocketErrorComponent } from './helper/socket-error/socket-error.compone
 import { AutoSigningComponent } from './auto-signing/auto-signing.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { ActiveUsersPanelComponent } from './dashboard/active-users-panel/active-users-panel.component';
+import { NavBarComponent } from './dashboard/nav-bar/nav-bar.component';
+import { DashboardHomeComponent } from './dashboard/pages/dashboard-home/dashboard-home.component';
 
 @NgModule({
    declarations: [
@@ -28,7 +30,9 @@ import { ActiveUsersPanelComponent } from './dashboard/active-users-panel/active
       SocketErrorComponent,
       AutoSigningComponent,
       DashboardComponent,
-      ActiveUsersPanelComponent
+      ActiveUsersPanelComponent,
+      NavBarComponent,
+      DashboardHomeComponent
    ],
    imports: [
       BrowserModule,

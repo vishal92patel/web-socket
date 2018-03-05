@@ -1,0 +1,5 @@
+.dashboard-background{
+   background-image: url('/assets/dashboard-background.jpg');
+   height: 100vh;
+   box-shadow: 0 0px 4px 1px rgba(0,0,0,0.2);
+ }
