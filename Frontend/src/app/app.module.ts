@@ -19,6 +19,7 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { ActiveUsersPanelComponent } from './dashboard/active-users-panel/active-users-panel.component';
 import { NavBarComponent } from './dashboard/nav-bar/nav-bar.component';
 import { DashboardHomeComponent } from './dashboard/pages/dashboard-home/dashboard-home.component';
+import { SelfExecuteCommandService } from './services/self-execute-command.service';
 
 @NgModule({
    declarations: [
@@ -46,7 +47,8 @@ import { DashboardHomeComponent } from './dashboard/pages/dashboard-home/dashboa
       CanActiveDashboard,
       WebSocketService,
       GpioService,
-      WebSocketResolve
+      WebSocketResolve,
+      SelfExecuteCommandService
    ],
    bootstrap: [AppComponent]
 })

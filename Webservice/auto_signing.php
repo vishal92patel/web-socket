@@ -1,18 +1,16 @@
 <?php
 require_once('connection.php');
-if(isset($_POST['command']) && isset($_POST['old_socket_id']) && isset($_POST['new_socket_id'])) {
+if(isset($_POST['old_socket_id']) && isset($_POST['new_socket_id'])) {
     $postData = $_POST;
     echo auto_signing($pdo, $postData);
 }
 function auto_signing($pdo, $postDataVal){
     if(searchUserWithSocketId($pdo, $postDataVal['old_socket_id'], $postDataVal['new_socket_id'])){
         return json_encode(array(
-            "command" => $postDataVal['command'],
             'success'=> true
         ));
     }else{
         return json_encode(array(
-            "command" => $postDataVal['command'],
             'error'=> true
         ));
     }

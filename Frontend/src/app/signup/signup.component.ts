@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       ]
    }
    unsubscribeWebSocketService;
-   alertBox = {};
+   alertBox;
    constructor(
       private fb: FormBuilder,
       private webSocketService: WebSocketService

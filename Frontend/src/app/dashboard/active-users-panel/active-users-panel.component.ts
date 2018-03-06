@@ -15,6 +15,7 @@ export class ActiveUsersPanelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.webSocketService.send(Commands.GET_USERS_PANEL, {}, Commands.BROADCAST_TO_ALL);
   }
 
 }

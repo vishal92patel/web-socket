@@ -6,13 +6,16 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import * as io from 'socket.io-client';
+import { SelfExecuteCommandService } from '../self-execute-command.service';
 
 @Injectable()
 export class WebSocketService {
-   private url = 'http://localhost:3000';
+   private url = 'localhost:3000';
    private socket;
    private handler = new Subject<any>();
-   constructor() { }
+   constructor(
+      private selfExecuteCommandService: SelfExecuteCommandService
+   ) { }
 
    connect() {
       return new Observable((obs) => {
@@ -35,8 +38,11 @@ export class WebSocketService {
       this.received();
    }
 
-   send(command: Commands, data: Object) {
+   send(command: Commands, data: Object, commandType?: Commands) {
       Object.assign(data, { 'command': command });
+      if (commandType) {
+         Object.assign(data, { 'commandType': commandType });
+      }
       this.socket.emit(command, data);
    }
 
@@ -45,13 +51,29 @@ export class WebSocketService {
          console.log('-----*-----*-----*-----*-----*-----*-----*-----*-----');
          console.log(res);
          let data = {};
-         try {
-            data = Object.assign(data, JSON.parse(res));
-         } catch (E) {
-            console.log(E);
+         if(typeof(res) == 'object'){
+            data = res;
          }
+         // try {
+         //    data = Object.assign(data, JSON.parse(res));
+         // } catch (E) {
+         //    console.log(E);
+         // }
          console.log('-----*-----*-----*-----*-----*-----*-----*-----*-----');
-         this.broadcast(data);
+         if (data['commandType']) {
+            if (data['commandType'] == Commands.SELF_EXECUTE) { // Not in use but use in chat
+               let newData;
+               newData = this.selfExecuteCommandService.autoTrigger(<Commands>data['commandType']);
+               console.log(newData);
+               if (<Commands>newData.command) {
+                  this.socket.emit(newData);
+               }
+            } else {
+               this.broadcast(data);
+            }
+         }else{
+            this.broadcast(data);
+         }
       });
    }
 

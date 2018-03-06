@@ -2,14 +2,10 @@
 require_once('connection.php');
 if( isset($_POST['email']) && 
 isset($_POST['password']) && 
-isset($_POST['command']) && 
 isset($_POST['socket_id'])) {
     $postData = $_POST;
     echo signin($pdo, $postData);
 }
-
-// $postData = array('email' => 'v@y.com','password' => '1234567890', 'socket_id' => 'newSocketId123' ,'command' => 'tpCmd');
-// echo signin($pdo, $postData);
 
 function signin($pdo, $postDataVal){
     $sql = 'SELECT * FROM users WHERE email = :email AND password = :password';
@@ -19,19 +15,16 @@ function signin($pdo, $postDataVal){
         while($row = $stmt->fetch()){
             if(setUserTologgedIn($pdo, $row['id'], $postDataVal['socket_id'])){
                 return json_encode(array(
-                    "command" => $postDataVal['command'],
                     'success'=>'You have successfully logged in.'
                 ));
             }else{
                 return json_encode(array(
-                    "command" => $postDataVal['command'],
                     'error'=>'loggedIn.'
                 ));
             }
         }
     }else{
         return json_encode(array(
-            "command" => $postDataVal['command'],
             'error'=>'Invalid email or password, Try again.'
         ));
     }

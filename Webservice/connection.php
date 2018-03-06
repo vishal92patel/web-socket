@@ -6,16 +6,9 @@ date_default_timezone_set('Asia/Kolkata');
    }
    catch (PDOException $e) {
       // echo 'Error: ' . $e->getMessage();
-      if(isset($_POST['command'])){
-         echo json_encode(array(
-            "command" => $_POST['command'],
-            "error" => "DB not connected."
-         ));
-      }else{
-         echo json_encode(array(
-            "error" => "DB not connected."
-         ));
-      }
+      echo json_encode(array(
+         "error" => "DB not connected."
+      ));
       exit();
    }
 ?>
