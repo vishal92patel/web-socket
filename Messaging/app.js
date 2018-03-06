@@ -5,6 +5,10 @@ var io = require('socket.io')(http);
 const commandsModule = require('./modules/commandsModule');
 var request = require('request');
 var apiUrl = "http://localhost/websocket_apis";
+var channelList = {
+   received: "received", // for general purpose and registered before user is not logged
+   receivedForLoggedIn :"receivedForLoggedIn" // Registered when user is logged-in
+}
 // app.use(function (req, res, next) {
 //     // Website you wish to allow to connect
 //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
@@ -41,7 +45,7 @@ io.on('connection', function (socket) {
                url: apiUrl + '/signup.php',
                form: data
             }, function (requestErr, requestRes, requestBody) {
-               sendToClient(socket, 'received', bindCommands(data, requestBody));
+               sendToClient(socket, channelList.received, bindCommands(data, requestBody));
             }
          );
       }
@@ -53,7 +57,7 @@ io.on('connection', function (socket) {
                url: apiUrl + '/signin.php',
                form: data
             }, function (requestErr, requestRes, requestBody) {
-               sendToClient(socket, 'received', bindCommands(data, requestBody));
+               sendToClient(socket, channelList.received, bindCommands(data, requestBody));
             }
          );
       }
@@ -65,7 +69,7 @@ io.on('connection', function (socket) {
                url: apiUrl + '/auto_signing.php',
                form: data
             }, function (requestErr, requestRes, requestBody) {
-               sendToClient(socket, 'received', bindCommands(data, requestBody));
+               sendToClient(socket, channelList.received, bindCommands(data, requestBody));
             }
          );
       }
@@ -77,7 +81,7 @@ io.on('connection', function (socket) {
                url: apiUrl + '/get_users_panel.php',
                form: data
             }, function (requestErr, requestRes, requestBody) {
-               sendToClient(socket, 'received', bindCommands(data, requestBody));
+               sendToClient(socket, channelList.receivedForLoggedIn, bindCommands(data, requestBody));
             }
          );
       }

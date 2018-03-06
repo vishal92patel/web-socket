@@ -12,7 +12,9 @@ export class DashboardComponent implements OnInit {
   constructor(
     private gpioService: GpioService,
     private webSocketService: WebSocketService
-  ) { }
+  ) {
+    this.webSocketService.receivedForLoggedIn();
+   }
 
   ngOnInit() {
     this.gpioService.setAppCompLoader(false);

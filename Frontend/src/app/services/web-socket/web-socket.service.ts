@@ -13,6 +13,10 @@ export class WebSocketService {
    private url = 'localhost:3000';
    private socket;
    private handler = new Subject<any>();
+   private channelList = {
+      received: "received", // for general purpose and registered before user is not logged
+      receivedForLoggedIn: "receivedForLoggedIn" // Registered when user is logged-in
+   }
    constructor(
       private selfExecuteCommandService: SelfExecuteCommandService
    ) { }
@@ -47,34 +51,42 @@ export class WebSocketService {
    }
 
    received() {
-      this.socket.on('received', (res) => {
-         console.log('-----*-----*-----*-----*-----*-----*-----*-----*-----');
+      this.socket.on(this.channelList.received, (res) => {
+         console.log('-----*-----*-----*channel - received*-----*-----*-----');
          console.log(res);
-         let data = {};
-         if(typeof(res) == 'object'){
-            data = res;
-         }
-         // try {
-         //    data = Object.assign(data, JSON.parse(res));
-         // } catch (E) {
-         //    console.log(E);
-         // }
          console.log('-----*-----*-----*-----*-----*-----*-----*-----*-----');
-         if (data['commandType']) {
-            if (data['commandType'] == Commands.SELF_EXECUTE) { // Not in use but use in chat
-               let newData;
-               newData = this.selfExecuteCommandService.autoTrigger(<Commands>data['commandType']);
-               console.log(newData);
-               if (<Commands>newData.command) {
-                  this.socket.emit(newData);
-               }
-            } else {
-               this.broadcast(data);
+         this.process(res);
+      });
+   }
+
+   receivedForLoggedIn() {
+      this.socket.on(this.channelList.receivedForLoggedIn, (res) => {
+         console.log('-----*-----*-----*channel - receivedForLoggedIn*-----*-----*-----');
+         console.log(res);
+         console.log('-----*-----*-----*-----*-----*-----*-----*-----*-----');
+         this.process(res);
+      });
+   }
+
+   process(res) {
+      let data = {};
+      if (typeof (res) == 'object') {
+         data = res;
+      }
+      if (data['commandType']) {
+         if (data['commandType'] == Commands.SELF_EXECUTE) { // Not in use but use in chat
+            let newData;
+            newData = this.selfExecuteCommandService.autoTrigger(<Commands>data['commandType']);
+            console.log(newData);
+            if (<Commands>newData.command) {
+               this.socket.emit(newData);
             }
-         }else{
+         } else {
             this.broadcast(data);
          }
-      });
+      } else {
+         this.broadcast(data);
+      }
    }
 
    broadcast(data) {
