@@ -2,26 +2,14 @@ const express = require('express');
 const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var async = require('async');
 const commandsModule = require('./modules/commandsModule');
 var request = require('request');
 var apiUrl = "http://localhost/websocket_apis";
 var channelList = {
    received: "received", // for general purpose and registered before user is not logged
-   receivedForLoggedIn :"receivedForLoggedIn" // Registered when user is logged-in
+   receivedForLoggedIn: "receivedForLoggedIn" // Registered when user is logged-in
 }
-// app.use(function (req, res, next) {
-//     // Website you wish to allow to connect
-//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-//     // Request methods you wish to allow
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-//     // Request headers you wish to allow
-//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-//     // Set to true if you need the website to include cookies in the requests sent
-//     // to the API (e.g. in case you use sessions)
-//     res.setHeader('Access-Control-Allow-Credentials', true);
-//     // Pass to next layer of middleware
-//     next();
-// });
 
 app.use(function (req, res, next) {
    res.header("Access-Control-Allow-Origin", "*");
@@ -37,6 +25,16 @@ io.on('connection', function (socket) {
    console.log(socket.id + '-User connected');
    socket.on('disconnect', function () {
       logout(socket.id, request);
+      data = {
+         "socket_id": socket.id,
+         "command": commandsModule().GET_USERS_PANEL,
+         "commandType": commandsModule().BROADCAST_TO_ALL
+      };
+      async.parallel({ get_users_panel: getUsersPanel.bind(null, data) }, function (err, result) {
+         if (result.get_users_panel) {
+            sendToClient(socket, channelList.receivedForLoggedIn, bindCommands(data, result.get_users_panel));
+         }
+      });
    });
    socket.on(commandsModule().CREATE_USER, (data) => {
       if (data.command == commandsModule().CREATE_USER) {
@@ -76,14 +74,12 @@ io.on('connection', function (socket) {
    });
    socket.on(commandsModule().GET_USERS_PANEL, (data) => {
       if (data.command == commandsModule().GET_USERS_PANEL) {
-         request.post(
-            {
-               url: apiUrl + '/get_users_panel.php',
-               form: data
-            }, function (requestErr, requestRes, requestBody) {
-               sendToClient(socket, channelList.receivedForLoggedIn, bindCommands(data, requestBody));
+         async.parallel({ get_users_panel: getUsersPanel.bind(null, data) }, function (err, result) {
+            if (result.get_users_panel) {
+               // console.log(bindCommands(data, result.get_users_panel));
+               sendToClient(socket, channelList.receivedForLoggedIn, bindCommands(data, result.get_users_panel));
             }
-         );
+         });
       }
    });
 });
@@ -91,7 +87,11 @@ io.on('connection', function (socket) {
 function bindCommands(data, requestBody) {
    var newRequestBody = {};
    try {
-      newRequestBody = JSON.parse(requestBody);
+      if (Array.isArray(JSON.parse(requestBody)) && typeof (JSON.parse(requestBody)) == "object") {
+         newRequestBody = { data: JSON.parse(requestBody) };
+      } else if (typeof (newRequestBody) == "object") {
+         newRequestBody = JSON.parse(requestBody);
+      }
       if (data.command) {
          Object.assign(newRequestBody, { command: data.command });
       }
@@ -101,7 +101,6 @@ function bindCommands(data, requestBody) {
    } catch (E) {
       console.log(E);
    }
-   console.log(newRequestBody);
    return newRequestBody;
 }
 
@@ -132,7 +131,17 @@ function logout(socketId, request) {
    console.log(socketId + ' user disconnected');
 }
 
+var getUsersPanel = function (data, callback) {
+   request.post(
+      {
+         url: apiUrl + '/get_users_panel.php',
+         form: data
+      }, function (requestErr, requestRes, requestBody) {
+         callback(null, requestBody);
+      }
+   );
+};
+
 http.listen(3000, function () {
    console.log('listening on *:3000');
 });
-// app.listen(3000, () => console.log('Messaging listening on port 3000'));

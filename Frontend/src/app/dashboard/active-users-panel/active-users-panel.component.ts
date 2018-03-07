@@ -9,13 +9,17 @@ import { Commands } from '../../services/commands';
   styleUrls: ['./active-users-panel.component.css']
 })
 export class ActiveUsersPanelComponent implements OnInit {
+  unsubscribeGetUsersPanel;
   constructor(
     private gpioService: GpioService,
     private webSocketService: WebSocketService
   ) { }
 
   ngOnInit() {
-    this.webSocketService.send(Commands.GET_USERS_PANEL, {}, Commands.BROADCAST_TO_ALL);
+    this.webSocketService.send(Commands.GET_USERS_PANEL, { socket_id: this.gpioService.getSocketId() }, Commands.BROADCAST_TO_ALL);
+    this.unsubscribeGetUsersPanel = this.webSocketService.subscribe(Commands.GET_USERS_PANEL, (res) => {
+      console.log(res);
+    })
   }
 
 }

@@ -77,7 +77,6 @@ export class WebSocketService {
          if (data['commandType'] == Commands.SELF_EXECUTE) { // Not in use but use in chat
             let newData;
             newData = this.selfExecuteCommandService.autoTrigger(<Commands>data['commandType']);
-            console.log(newData);
             if (<Commands>newData.command) {
                this.socket.emit(newData);
             }
