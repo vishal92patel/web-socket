@@ -2,7 +2,29 @@
   <input type="text" class="form-control" placeholder="Search your friends">
 </div>
 <ul class="list-group">
-  <div *ngFor="let x of [1,2,3,4,5,6,7,8,9,10]">
+  <div *ngFor="let usersPanelDataRow of usersPanelData; let i = index">
+    <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="usersPanelDataRow | selfRemover:[usersPanelData, i]">
+      <div class="list-group-item-wrapper">
+        <div class="profile-pic">
+          <img [src]="usersPanelDataRow.profile_pic" />
+        </div>
+        <div class="name">
+          {{usersPanelDataRow.full_name}}
+          <div class="last_seen">
+            {{usersPanelDataRow.last_seen | lastSeen:[usersPanelDataRow.has_already_logged_in]}}
+          </div>
+        </div>
+        <div class="status">
+          <span class="badge badge-online" [ngClass]="{
+                  'badge-online': usersPanelDataRow.has_already_logged_in == '1',
+                  'badge-offline': usersPanelDataRow.has_already_logged_in == '0'
+                  }">
+          </span>
+        </div>
+      </div>
+    </li>
+  </div>
+  <!-- <div *ngFor="let x of [1,2,3,4,5,6,7,8,9,10]">
     <li class="list-group-item d-flex justify-content-between align-items-center">
       <div class="list-group-item-wrapper">
         <div class="profile-pic">
@@ -45,5 +67,5 @@
         </div>
       </div>
     </li>
-  </div>
+  </div> -->
 </ul>

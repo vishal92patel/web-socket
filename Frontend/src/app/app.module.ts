@@ -20,6 +20,8 @@ import { ActiveUsersPanelComponent } from './dashboard/active-users-panel/active
 import { NavBarComponent } from './dashboard/nav-bar/nav-bar.component';
 import { DashboardHomeComponent } from './dashboard/pages/dashboard-home/dashboard-home.component';
 import { SelfExecuteCommandService } from './services/self-execute-command.service';
+import { LastSeenPipe } from './dashboard/active-users-panel/pipes/last-seen.pipe';
+import { SelfRemoverPipe } from './dashboard/active-users-panel/pipes/self-remover.pipe';
 
 @NgModule({
    declarations: [
@@ -33,7 +35,9 @@ import { SelfExecuteCommandService } from './services/self-execute-command.servi
       DashboardComponent,
       ActiveUsersPanelComponent,
       NavBarComponent,
-      DashboardHomeComponent
+      DashboardHomeComponent,
+      LastSeenPipe,
+      SelfRemoverPipe
    ],
    imports: [
       BrowserModule,
