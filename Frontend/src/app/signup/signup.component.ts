@@ -48,21 +48,21 @@ export class SignupComponent implements OnInit, OnDestroy {
 
    createSignUpForm() {
       this.signUpForm = this.fb.group({
-         fullName: ['vishal', [
+         fullName: ['', [
             Validators.required
          ]
          ],
-         email: ['v@y.com', [
+         email: ['', [
             Validators.required,
             Validators.email
          ]
          ],
-         password: ['12345678', [
+         password: ['', [
             Validators.required,
             Validators.pattern(/.{8,}/)
          ]
          ],
-         confirmPassword: ['12345678', [
+         confirmPassword: ['', [
             Validators.required,
             Validators.pattern(/.{8,}/),
             this.confirmPasswordValidators()

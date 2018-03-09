@@ -45,16 +45,18 @@ Note: Whole communication is happened using websocket only, No were HTTP protoco
 - Observable.
 - Angular Service.
 - Modular components.
+- Ng-Pipe.
+- Router-Guards.
+- Resolving Routes.
 - Directives.
 
 **Main Features**
 
 - User login.
 - Signup.
-- Manage logged-in user session.
-- Auto login.
-- Check real time user status, whether user is online or offline.
-- Last seen.
+- Manage session.
+- Keep user logged in automatically.
+- Check real time user status, whether user is online, offline and last seen.
 - One on one Chat. (Upcoming).
 - Group chat. (Upcoming).
 
