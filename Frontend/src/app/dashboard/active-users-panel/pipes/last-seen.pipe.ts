@@ -23,16 +23,27 @@ export class LastSeenPipe implements PipeTransform {
         let yesterdayStart = new Date(new Date().setHours(-24, 0, 0, 0));
         let yesterdayEnd = new Date(new Date(new Date().setHours(-24, 0, 0, 0)).setHours(+23, 59, 59, 0));
         if (dateInDate >= todayStart && dateInDate <= todayEnd) {
-          return 'Last seen today at ' + time;
+          return 'Last seen today at ' + this.convertTimeTo12Hrs(time);
         } else if (dateInDate >= yesterdayStart && dateInDate <= yesterdayEnd) {
-          return 'Last seen yesterday at ' + time;
+          return 'Last seen yesterday at ' + this.convertTimeTo12Hrs(time);
         } else {
-          return 'Last seen ' + date +' at ' + time;
+          return 'Last seen ' + date +' at ' + this.convertTimeTo12Hrs(time);
         }
       }
     } else {
-      return value;
+      return 'New user.';
     }
   }
 
+  convertTimeTo12Hrs (time) {
+    // Check correct time format and split into components
+    time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+    if (time.length > 1) { // If time format correct
+      time = time.slice (1);  // Remove full string match value
+      time[5] = +time[0] < 12 ? ' am' : ' pm';  // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+      time.splice(3,1); // Remove seconds
+    }
+    return time.join (''); // return adjusted time or original string
+  }
 }
