@@ -22,6 +22,7 @@ import { DashboardHomeComponent } from './dashboard/pages/dashboard-home/dashboa
 import { SelfExecuteCommandService } from './services/self-execute-command.service';
 import { LastSeenPipe } from './dashboard/active-users-panel/pipes/last-seen.pipe';
 import { SelfRemoverPipe } from './dashboard/active-users-panel/pipes/self-remover.pipe';
+import { BsDropdownModule } from 'ngx-bootstrap';
 
 @NgModule({
    declarations: [
@@ -42,7 +43,8 @@ import { SelfRemoverPipe } from './dashboard/active-users-panel/pipes/self-remov
    imports: [
       BrowserModule,
       RouterModule.forRoot(appRoutes),
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      BsDropdownModule.forRoot()
    ],
    providers: [
       CanActiveHome,

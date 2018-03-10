@@ -1,4 +1,41 @@
-<app-nav-bar></app-nav-bar>
+<app-nav-bar>
+   <div class="col-md-12" content>
+      <div class="row">
+         <div class="col-2 col-md-1 col-lg-1 text-left">
+            <div class="btn">
+               <i class="fas fa-home"></i>
+            </div>
+         </div>
+         <div class="col-8 col-md-10 col-lg-10 text-left">
+            <div class="btn">
+               Home
+            </div>
+         </div>
+         <div class="col-2 col-md-1 col-lg-1 text-right">
+            <div dropdown>
+               <div class="btn" dropdownToggle>
+                  <i class="fas fa-ellipsis-v"></i>
+               </div>
+               <ul *dropdownMenu class="dropdown-menu reverse-open-dropdown-menu" role="menu" style="margin-top:8px;">
+                  <li role="menuitem">
+                     <a class="dropdown-item" [routerLink]="">View My Profile</a>
+                  </li>
+                  <li role="menuitem">
+                     <a class="dropdown-item" [routerLink]="">Change Settings</a>
+                  </li>
+                  <li role="menuitem">
+                     <a class="dropdown-item" [routerLink]="">Refresh</a>
+                  </li>
+                  <li class="divider dropdown-divider"></li>
+                  <li role="menuitem">
+                     <a class="dropdown-item" [routerLink]="" (click)="logout()">Logout</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+</app-nav-bar>
 <div class="pages-dashboard-background">
 
 </div>

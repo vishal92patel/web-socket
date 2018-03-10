@@ -48,3 +48,7 @@
 .no-padding{
   padding: 0;
 }
+.reverse-open-dropdown-menu{
+  left: auto !important;
+  right: 0px !important;
+}

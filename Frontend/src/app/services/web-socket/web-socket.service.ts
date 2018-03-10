@@ -97,4 +97,8 @@ export class WebSocketService {
          .filter(handler => handler.command === command)
          .subscribe(callback);
    }
+
+   removeListener(channelName) {
+      this.socket.removeListener(channelName, function(){});
+   }
 }

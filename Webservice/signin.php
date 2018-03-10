@@ -15,7 +15,8 @@ function signin($pdo, $postDataVal){
         while($row = $stmt->fetch()){
             if(setUserTologgedIn($pdo, $row['id'], $postDataVal['socket_id'])){
                 return json_encode(array(
-                    'success'=>'You have successfully logged in.'
+                    'success'=>'You have successfully logged in.',
+                    'old_socket_id' => $row['socket_id']
                 ));
             }else{
                 return json_encode(array(
