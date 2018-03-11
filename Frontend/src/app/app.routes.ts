@@ -3,6 +3,7 @@ import { CanActiveHome, CanActiveSignin, CanActiveAutoSigning, CanActiveDashboar
 import { ConnectingComponent } from './helper/connecting/connecting.component';
 import { DisconnectedComponent } from './helper/disconnected/disconnected.component';
 import { SocketErrorComponent } from './helper/socket-error/socket-error.component';
+import { DuplicateSessionComponent } from './helper/duplicate-session/duplicate-session.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AutoSigningComponent } from './auto-signing/auto-signing.component';
@@ -22,6 +23,10 @@ export const appRoutes: Routes = [
    {
       path: 'socket-error',
       component: SocketErrorComponent,
+   },
+   {
+      path: 'duplicate-session',
+      component: DuplicateSessionComponent
    },
    {
       path: 'home',

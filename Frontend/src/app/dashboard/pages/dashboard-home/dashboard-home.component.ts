@@ -20,11 +20,12 @@ export class DashboardHomeComponent implements OnInit {
   }
 
   logout() {
+    this.webSocketService.removeListener('receivedForLoggedIn');
     this.webSocketService.send(Commands.HARD_LOGOUT, { socket_id: this.gpioService.getSocketId() });
     this.gpioService.setSocketId(null);
     this.gpioService.setLoggedInStatus(false);
     localStorage.removeItem('socketId');
-    this.router.navigate(["/home"]);
+    this.router.navigate(["/"]);
   }
 
 }

@@ -23,6 +23,7 @@ import { SelfExecuteCommandService } from './services/self-execute-command.servi
 import { LastSeenPipe } from './dashboard/active-users-panel/pipes/last-seen.pipe';
 import { SelfRemoverPipe } from './dashboard/active-users-panel/pipes/self-remover.pipe';
 import { BsDropdownModule } from 'ngx-bootstrap';
+import { DuplicateSessionComponent } from './helper/duplicate-session/duplicate-session.component';
 
 @NgModule({
    declarations: [
@@ -38,7 +39,8 @@ import { BsDropdownModule } from 'ngx-bootstrap';
       NavBarComponent,
       DashboardHomeComponent,
       LastSeenPipe,
-      SelfRemoverPipe
+      SelfRemoverPipe,
+      DuplicateSessionComponent
    ],
    imports: [
       BrowserModule,

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Commands } from '../commands';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
@@ -18,7 +19,8 @@ export class WebSocketService {
       receivedForLoggedIn: "receivedForLoggedIn" // Registered when user is logged-in
    }
    constructor(
-      private selfExecuteCommandService: SelfExecuteCommandService
+      private selfExecuteCommandService: SelfExecuteCommandService,
+      private router: Router,
    ) { }
 
    connect() {
@@ -99,6 +101,6 @@ export class WebSocketService {
    }
 
    removeListener(channelName) {
-      this.socket.removeListener(channelName, function(){});
+      this.socket.removeListener(channelName);
    }
 }
